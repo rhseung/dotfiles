@@ -49,6 +49,8 @@ cask "google-chrome"
 
 # --- 유틸리티 앱 ---
 cask "alcove"
+cask "vorssaint"
+cask "gitify"
 cask "setapp"
 
 # --- 개발 앱 ---
