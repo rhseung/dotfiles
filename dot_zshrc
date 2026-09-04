@@ -64,19 +64,22 @@ command -v fnox >/dev/null && eval "$(fnox activate zsh)"
 
 
 # =============================================================================
-# Maintenance — brew 자동 업데이트 (하루 1회, 백그라운드)
+# Maintenance — brew / mise 자동 업데이트 (하루 1회, 백그라운드)
 # =============================================================================
-_brew_auto_update() {
-  local stamp="${XDG_CACHE_HOME:-$HOME/.cache}/brew_last_update"
+_daily_auto_update() {
+  local stamp="${XDG_CACHE_HOME:-$HOME/.cache}/daily_last_update"
   local now last=0
   now=$(date +%s)
   [[ -f "$stamp" ]] && last=$(cat "$stamp")
   if (( now - last > 86400 )); then
     echo "$now" > "$stamp"
-    (brew update && brew upgrade --greedy) &>/dev/null &!
+    {
+      command -v brew >/dev/null && brew update && brew upgrade --greedy
+      [ -x "$HOME/.local/bin/mise" ] && "$HOME/.local/bin/mise" self-update -y
+    } &>/dev/null &!
   fi
 }
-command -v brew >/dev/null && _brew_auto_update
+_daily_auto_update
 
 
 # =============================================================================
