@@ -1,0 +1,9 @@
+# mise — shims 방식. GUI 앱·비인터랙티브 셸도 잡게 (인터랙티브는 .zshrc 의 activate)
+[ -x "$HOME/.local/bin/mise" ] && eval "$(~/.local/bin/mise activate zsh --shims)"
+
+# Added by OrbStack: command-line tools and integration
+# This won't be added again if you remove it.
+source ~/.orbstack/shell/init.zsh 2>/dev/null || :
+
+# Added by Toolbox App
+export PATH="$PATH:/Users/r.hseung/Library/Application Support/JetBrains/Toolbox/scripts"

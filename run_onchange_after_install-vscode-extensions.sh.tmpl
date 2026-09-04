@@ -1,0 +1,12 @@
+#!/bin/sh
+# vscode-extensions.txt 가 바뀔 때마다 확장을 맞춘다.
+# list sha256: {{ include "vscode-extensions.txt" | sha256sum }}
+
+command -v code >/dev/null || exit 0
+
+list="$HOME/.local/share/chezmoi/vscode-extensions.txt"
+[ -f "$list" ] || exit 0
+
+while IFS= read -r ext; do
+  [ -n "$ext" ] && code --install-extension "$ext" --force
+done < "$list"

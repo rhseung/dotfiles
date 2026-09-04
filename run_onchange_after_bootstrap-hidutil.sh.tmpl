@@ -1,0 +1,10 @@
+#!/bin/sh
+# hidutil 키 리매핑(오른쪽 Cmd -> F18) LaunchAgent 를 plist 가 바뀔 때마다 다시 올린다.
+# 아래 해시가 chezmoi 의 onchange 트리거 - plist 내용이 바뀌면 이 줄이 바뀌어 재실행된다.
+# plist sha256: {{ include "private_Library/LaunchAgents/local.hidutil.rcmd-to-f18.plist" | sha256sum }}
+
+plist="$HOME/Library/LaunchAgents/local.hidutil.rcmd-to-f18.plist"
+[ -f "$plist" ] || exit 0
+
+launchctl bootout "gui/$(id -u)" "$plist" 2>/dev/null || true
+launchctl bootstrap "gui/$(id -u)" "$plist"

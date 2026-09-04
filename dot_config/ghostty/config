@@ -1,0 +1,32 @@
+# Font
+font-family = "Monaspace Neon NF"
+font-family = "Pretendard"
+font-size = 11
+font-thicken = true
+adjust-box-thickness = 1
+adjust-cursor-thickness = 1
+font-feature = calt, ss01, ss02, ss03, ss04, ss05, ss06, ss07, ss08, ss09, ss10, liga
+
+# Theme
+theme = light:sherbet-light,dark:sherbet
+
+# Layout
+adjust-cell-height = 15%
+window-padding-x = 8
+
+# Cursor
+cursor-style = bar
+mouse-hide-while-typing = true
+
+# UX
+confirm-close-surface = false
+
+# Keybinds
+keybind = super+left=previous_tab
+keybind = super+right=next_tab
+
+# background
+macos-titlebar-style = tabs
+
+background-opacity = 0.85
+background-blur = true

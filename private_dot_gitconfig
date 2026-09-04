@@ -1,0 +1,26 @@
+[core]
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	dark = true
+[merge]
+	conflictStyle = zdiff3
+[user]
+	name = Hyunseung Ryu
+	email = ryu@rhseung.me
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIClM67b0xIZe0zf4nS51UiMV3JVeozdti1IERxXwDQFU
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+[commit]
+	gpgsign = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[init]
+	defaultBranch = main

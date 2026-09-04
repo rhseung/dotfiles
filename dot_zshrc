@@ -1,0 +1,85 @@
+# =============================================================================
+# Environment & PATH
+# =============================================================================
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+export PATH="$HOME/.local/bin:$PATH"
+
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+export ANDROID_HOME="$HOMEBREW_PREFIX/share/android-commandlinetools"
+export PATH="$ANDROID_HOME/platform-tools:$PATH"
+export PATH="$PATH:$HOME/.pub-cache/bin"
+
+export PATH="$HOMEBREW_PREFIX/opt/make/libexec/gnubin:$PATH"
+
+
+# =============================================================================
+# Completions — FPATH 방식 플러그인은 compinit 보다 앞
+# =============================================================================
+FPATH="$HOMEBREW_PREFIX/share/zsh-completions:$FPATH"
+autoload -Uz compinit && compinit
+
+[ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
+
+
+# =============================================================================
+# Plugins — 순서 고정
+# =============================================================================
+# fzf-tab: compinit 뒤, 위젯 래핑(autosuggestions/syntax-highlighting) 앞
+[ -f "$HOMEBREW_PREFIX/opt/fzf-tab/share/fzf-tab/fzf-tab.zsh" ] \
+  && source "$HOMEBREW_PREFIX/opt/fzf-tab/share/fzf-tab/fzf-tab.zsh"
+
+[ -f "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ] \
+  && source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+# syntax-highlighting 은 history-substring-search 보다 먼저
+[ -f "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ] \
+  && source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+
+if [ -f "$HOMEBREW_PREFIX/share/zsh-history-substring-search/zsh-history-substring-search.zsh" ]; then
+  source "$HOMEBREW_PREFIX/share/zsh-history-substring-search/zsh-history-substring-search.zsh"
+  bindkey '^[[A' history-substring-search-up
+  bindkey '^[[B' history-substring-search-down
+fi
+
+[ -f "$HOMEBREW_PREFIX/share/zsh-you-should-use/you-should-use.plugin.zsh" ] \
+  && source "$HOMEBREW_PREFIX/share/zsh-you-should-use/you-should-use.plugin.zsh"
+
+
+# =============================================================================
+# Tool init
+# =============================================================================
+command -v fzf >/dev/null && source <(fzf --zsh)
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
+[ -x "$HOME/.local/bin/mise" ] && eval "$(~/.local/bin/mise activate zsh)"
+command -v fnox >/dev/null && eval "$(fnox activate zsh)"
+
+
+# =============================================================================
+# 1Password — 토큰 CLI 를 Touch ID 로
+# =============================================================================
+[ -f ~/.config/op/plugins.sh ] && source ~/.config/op/plugins.sh
+
+
+# =============================================================================
+# Maintenance — brew 자동 업데이트 (하루 1회, 백그라운드)
+# =============================================================================
+_brew_auto_update() {
+  local stamp="${XDG_CACHE_HOME:-$HOME/.cache}/brew_last_update"
+  local now last=0
+  now=$(date +%s)
+  [[ -f "$stamp" ]] && last=$(cat "$stamp")
+  if (( now - last > 86400 )); then
+    echo "$now" > "$stamp"
+    (brew update && brew upgrade --greedy) &>/dev/null &!
+  fi
+}
+command -v brew >/dev/null && _brew_auto_update
+
+
+# =============================================================================
+# Prompt — precmd 훅이라 맨 끝
+# =============================================================================
+command -v starship >/dev/null && eval "$(starship init zsh)"
