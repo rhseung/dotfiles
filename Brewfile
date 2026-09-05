@@ -72,6 +72,13 @@ cask "obsidian"
 cask "spotify"
 cask "logitech-g-hub"
 
+# --- 게임 ---
+cask "steam"
+cask "minecraft"
+cask "modrinth"
+cask "curseforge"
+# cask "league-of-legends" # 북미 서버 설치 프로그램이라 한국 서버는 공식 사이트에서
+
 # --- 터미널 ---
 cask "ghostty"
 
