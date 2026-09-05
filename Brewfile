@@ -65,6 +65,9 @@ cask "slack"
 cask "discord"
 cask "zoom"
 
+# --- 노트 앱 ---
+cask "obsidian"
+
 # --- 그 외 앱 ---
 cask "spotify"
 cask "logitech-g-hub"
@@ -84,3 +87,4 @@ cask "font-0xproto-nerd-font"
 # --- App Store (mas) ---
 mas "Klack", id: 6446206067
 mas "KakaoTalk", id: 869223134
+mas "Notability", id: 360593530
