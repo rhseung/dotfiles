@@ -1,5 +1,6 @@
 #!/bin/sh
-# vscode-extensions.txt 가 바뀔 때마다 확장을 맞춘다.
+# vscode-extensions.txt 에 적힌 VS Code 확장을 설치한다.
+# 아래 해시 줄이 chezmoi 의 재실행 트리거다.
 # list sha256: {{ include "vscode-extensions.txt" | sha256sum }}
 
 command -v code >/dev/null || exit 0

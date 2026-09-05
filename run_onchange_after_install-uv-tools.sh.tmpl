@@ -1,6 +1,6 @@
 #!/bin/sh
-# uv-tools.txt 가 바뀔 때마다 uv tool 을 맞춘다.
-# brew 에 formula 가 있는 것은 Brewfile 로 가고, 여기 남는 건 PyPI 에만 있는 것들이다.
+# uv-tools.txt 에 적힌 uv tool 을 설치·업그레이드한다.
+# 아래 해시 줄이 chezmoi 의 재실행 트리거다.
 # list sha256: {{ include "uv-tools.txt" | sha256sum }}
 
 command -v uv >/dev/null || exit 0
