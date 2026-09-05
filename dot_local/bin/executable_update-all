@@ -1,0 +1,31 @@
+#!/bin/sh
+# brew, mise, uv 로 깐 것들을 한 번에 최신으로 올린다.
+# local.update-all LaunchAgent 가 매일 돌리고, 손으로도 `update-all` 로 돌린다.
+
+export PATH="/usr/bin:/bin:/usr/sbin:/sbin"
+eval "$(/opt/homebrew/bin/brew shellenv)"
+export PATH="$HOME/.local/bin:$HOME/.local/share/mise/shims:$PATH"
+
+echo "=== $(date '+%Y-%m-%d %H:%M:%S') update-all ==="
+
+if command -v brew >/dev/null; then
+  brew update
+  brew upgrade --formula
+
+  for cask in $(brew outdated --cask --greedy --quiet); do
+    if brew info --json=v2 --cask "$cask" | grep -qE '"(pkgutil|launchctl|kext)"'; then
+      echo "skip cask $cask - sudo 필요"
+    else
+      brew upgrade --cask "$cask"
+    fi
+  done
+fi
+
+if command -v mise >/dev/null; then
+  mise self-update -y
+  mise -C "$HOME" upgrade
+fi
+
+command -v uv >/dev/null && uv tool upgrade --all
+
+echo "=== $(date '+%Y-%m-%d %H:%M:%S') done ==="

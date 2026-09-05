@@ -1,0 +1,13 @@
+#!/bin/sh
+# chezmoi 가 푼 LaunchAgent plist 들을 launchd 에 다시 등록한다.
+# 아래 해시 줄이 chezmoi 의 재실행 트리거다.
+# hidutil sha256: {{ include "private_Library/LaunchAgents/local.hidutil.rcmd-to-f18.plist" | sha256sum }}
+# update-all sha256: {{ include "private_Library/LaunchAgents/local.update-all.plist.tmpl" | sha256sum }}
+
+for label in local.hidutil.rcmd-to-f18 local.update-all; do
+  plist="$HOME/Library/LaunchAgents/$label.plist"
+  [ -f "$plist" ] || continue
+
+  launchctl bootout "gui/$(id -u)" "$plist" 2>/dev/null || true
+  launchctl bootstrap "gui/$(id -u)" "$plist"
+done

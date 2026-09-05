@@ -35,6 +35,8 @@ Brewfile 은 chezmoi 가 관리하지 않아서 `brew bundle` 은 따로 실행�
 | `dot_config/ghostty/config` | `~/.config/ghostty/config` | 폰트·테마·키바인드 |
 | `dot_config/starship.toml` | `~/.config/starship.toml` | 프롬프트 |
 | `private_Library/LaunchAgents/local.hidutil.rcmd-to-f18.plist` | `~/Library/LaunchAgents/…` | 오른쪽 Cmd → F18 리매핑 |
+| `private_Library/LaunchAgents/local.update-all.plist.tmpl` | `~/Library/LaunchAgents/…` | 매일 13:00 `update-all` 실행 |
+| `dot_local/bin/executable_update-all` | `~/.local/bin/update-all` | brew·mise·uv 일괄 업데이트 |
 | `private_Library/…/Code/User/settings.json.tmpl` | VS Code `settings.json` | Flow Icons 라이선스를 1Password 에서 읽는다 |
 
 ## Repo Assets
@@ -53,9 +55,33 @@ chezmoi 가 관리하지 않는다 (`.chezmoiignore`).
 
 | 스크립트 | 하는 일 |
 | --- | --- |
-| `run_onchange_after_bootstrap-hidutil.sh.tmpl` | plist 가 바뀌면 LaunchAgent `launchctl bootout` + `bootstrap` |
+| `run_onchange_after_bootstrap-launchagents.sh.tmpl` | plist 가 바뀌면 LaunchAgent `launchctl bootout` + `bootstrap` |
 | `run_onchange_after_install-vscode-extensions.sh.tmpl` | 목록이 바뀌면 `code --install-extension` 루프 |
 | `run_onchange_after_install-uv-tools.sh.tmpl` | 목록이 바뀌면 `uv tool install --upgrade` 루프 |
+
+## Auto Update
+
+`local.update-all` LaunchAgent 가 매일 13:00 에 `~/.local/bin/update-all` 을 돌린다.
+자는 동안 지나간 시각은 깨어날 때 한 번 몰아서 실행된다.
+
+| 대상 | 명령 |
+| --- | --- |
+| Homebrew | `brew update`, `brew upgrade --formula`, 그다음 cask 를 하나씩 |
+| mise 자체 | `mise self-update -y` |
+| mise 글로벌 툴 | `mise -C "$HOME" upgrade` - 홈에 `mise.toml` 이 없어 글로벌 config 것만 |
+| uv tool | `uv tool upgrade --all` |
+
+`update-all` 은 launchd 가 준 환경을 안 믿고 PATH 를 직접 깐다. 이때 `export` 가
+`brew shellenv` 보다 먼저여야 한다 - 그 안의 `path_helper` 는 환경변수 PATH 만 읽어서,
+export 안 된 PATH 로는 `/usr/bin` 이 통째로 날아간다.
+한 단계가 실패해도 나머지는 돌도록 `set -e` 는 쓰지 않는다.
+
+로그는 `~/Library/Logs/update-all.log`. 지금 당장 돌리려면 `update-all` 또는
+`launchctl kickstart -k gui/$(id -u)/local.update-all`.
+cask 는 `--greedy` 로 목록만 뽑고 하나씩 올린다. `brew info --json=v2` 에 `pkgutil`·
+`launchctl`·`kext` 가 있는 cask (zoom 등) 는 업그레이드에 sudo 가 필요한데 launchd 에는
+TTY 가 없어 `sudo: a terminal is required` 로 죽는다. 그래서 그런 cask 는 건너뛰고
+`skip cask <이름> - sudo 필요` 만 로그에 남긴다 - 그건 손으로 `brew upgrade --cask <이름>`.
 
 ## Secrets
 
