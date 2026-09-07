@@ -99,3 +99,7 @@ cask "font-0xproto-nerd-font"
 mas "Klack", id: 6446206067
 mas "KakaoTalk", id: 869223134
 mas "Notability", id: 360593530
+
+# --- Todoist ---
+brew "todoist-cli"
+cask "todoist-app"
