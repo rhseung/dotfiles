@@ -103,3 +103,6 @@ mas "Notability", id: 360593530
 # --- Todoist ---
 brew "todoist-cli"
 cask "todoist-app"
+
+# --- Vercel ---
+brew "vercel"
