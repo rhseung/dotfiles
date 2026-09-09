@@ -8,11 +8,9 @@
 
 - Homebrew를 설치합니다.
 - 1Password 앱을 설치하고, 설정 > 개발자 > "1Password CLI와 통합" 을 켭니다.
-- App Store에 로그인합니다. 로그인하지 않으면 Brewfile의 `mas` 줄이 아무 메시지 없이
-  실패합니다. macOS 10.13부터 `mas signin`이 막혔기 때문에 App Store 앱에서 직접
-  로그인해야 합니다.
-- 언어 런타임으로 [mise](https://mise.jdx.dev/), [uv](https://docs.astral.sh/uv/),
-  [Bun](https://bun.com/)을 사용합니다.
+- App Store에 로그인합니다. 로그인하지 않으면 Brewfile의 `mas` 줄이 아무 메시지 없이 실패합니다. macOS 10.13부터 `mas
+signin`이 막혔기 때문에 App Store 앱에서 직접 로그인해야 합니다.
+- 언어 런타임으로 [mise](https://mise.jdx.dev/), [uv](https://docs.astral.sh/uv/), [Bun](https://bun.com/)을 사용합니다.
 
 ## 설치
 
@@ -93,14 +91,12 @@ cask는 `brew upgrade --cask <이름>` 으로 직접 업그레이드합니다.
 ## 비밀 정보
 
 - 토큰과 비밀번호는 저장소에 두지 않습니다. `fnox` 또는 1Password로 환경에 주입합니다.
-- Flow Icons 라이선스만 예외입니다. `settings.json.tmpl`의
-  `{{ onepasswordRead "op://Private/Flow Icons/reg_code" }}` 로 apply 할 때 값을 채웁니다.
-- `private_` 접두가 붙은 파일 (`~/.gitconfig`, LaunchAgent, VS Code 설정) 은 600 권한으로
-  배치됩니다.
+- Flow Icons 라이선스만 예외입니다. `settings.json.tmpl`의 `{{ onepasswordRead "op://Private/Flow Icons/reg_code" }}` 로
+apply 할 때 값을 채웁니다.
+- `private_` 접두가 붙은 파일 (`~/.gitconfig`, LaunchAgent, VS Code 설정) 은 600 권한으로 배치됩니다.
 
 ## 제외 대상
 
-- 언어 런타임 (mise, uv, bun). 세 가지 모두 자체 업데이트 명령을 유지하기 위해 설치
-  스크립트로 설치합니다.
+- 언어 런타임 (mise, uv, bun). 세 가지 모두 자체 업데이트 명령을 유지하기 위해 설치 스크립트로 설치합니다.
 - Raycast (직접 설치), MS Office와 한컴 (교내 배포처), MonoLisa (유료 폰트)
 - VS Code 설정 동기화는 Settings Sync와 병행합니다. 확장 목록만 이 저장소에 둡니다.
