@@ -9,7 +9,7 @@ adjust-cursor-thickness = 1
 font-feature = calt, liga, cv01, cv02, cv03, cv04, cv05, cv07, cv08, cv09, cv11, cv12, dlig, ss01, ss13
 
 # Theme
-theme = light:sherbet-light,dark:sherbet
+theme = light:Atom One Light,dark:Chalkboard
 
 # Layout
 adjust-cell-height = 15%

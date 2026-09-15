@@ -15,7 +15,7 @@ Reading files: use the Read tool, not `cat`/`bat`. `bat`'s pager, line numbers, 
 
 Parse JSON with `jq` and YAML/TOML with `yq` rather than slicing them with grep/sed.
 
-Drive the browser with `agent-browser`, not the Playwright MCP.
+Drive the browser with `aside`, not the Playwright MCP.
 
 When running shell commands, always prefer these tools. They are faster and installed globally.
 
