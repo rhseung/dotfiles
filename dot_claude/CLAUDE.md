@@ -33,9 +33,9 @@ When running shell commands, always prefer these tools. They are faster and inst
 거짓이 된다. `--amend` `--fixup` `rebase` 로 히스토리를 다시 쓰는 건 명시적으로 요청받았을
 때만 한다. 리뷰가 열려 있는 브랜치에는 force-push 하지 않는다 - 리뷰 스레드가 끊긴다.
 
-**제목은 영어, 본문은 한국어.** 제목은 `git log --oneline` 과 GitHub 목록에 서고 grep 대상이다.
+**제목 한 줄만 쓴다.** 제목은 영어로, `git log --oneline` 과 GitHub 목록에 서고 grep 대상이다.
 영어로 옮기면 뜻이 흐려지는 고유명사와 도메인 용어만 한국어로 남긴다.
-왜 그렇게 했는지는 본문에 한국어로 쓴다.
+본문과 co-author 트레일러는 사용자가 직접 쓰거나 명시적으로 요청했을 때만 붙인다.
 
 **문장부호는 ASCII 만.** `·` `—` `→` `…` 같은 기호는 터미널마다 폭이 달라 정렬이 깨진다.
 
