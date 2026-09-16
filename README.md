@@ -36,8 +36,6 @@ Brewfile은 chezmoi가 관리하지 않으므로 `brew bundle`은 따로 실행�
 | `dot_config/ghostty/config` | `~/.config/ghostty/config` | font, theme, keybind |
 | `dot_config/starship.toml` | `~/.config/starship.toml` | prompt |
 | `private_Library/LaunchAgents/local.hidutil.rcmd-to-f18.plist` | `~/Library/LaunchAgents/...` | 오른쪽 Cmd 키를 F18로 리매핑 |
-| `private_Library/LaunchAgents/local.update-all.plist.tmpl` | `~/Library/LaunchAgents/...` | 매일 13:00에 `update-all` 실행 |
-| `dot_local/bin/executable_update-all` | `~/.local/bin/update-all` | brew, mise, uv 일괄 업데이트 |
 | `private_Library/.../Code/User/settings.json.tmpl` | VS Code `settings.json` | Flow Icons 라이선스를 1Password에서 읽습니다 |
 
 ## 저장소 자산
@@ -59,32 +57,10 @@ chezmoi가 관리하지 않습니다 (`.chezmoiignore`).
 | `run_onchange_after_bootstrap-launchagents.sh.tmpl` | plist가 바뀌면 LaunchAgent를 `launchctl bootout` 한 뒤에 `bootstrap` 합니다 |
 | `run_onchange_after_install-vscode-extensions.sh.tmpl` | 목록이 바뀌면 `code --install-extension`을 반복 실행합니다 |
 
-## 자동 업데이트
+## Homebrew 업데이트
 
-`local.update-all` LaunchAgent가 매일 13:00에 `~/.local/bin/update-all`을 실행합니다.
-컴퓨터가 잠자는 동안 지나간 시각은 깨어날 때 한 번 몰아서 실행됩니다.
-
-| 대상 | 명령 |
-| --- | --- |
-| Homebrew | `brew update`, `brew upgrade --formula`, 그다음 cask를 하나씩 |
-| mise 자체 | `mise self-update -y` |
-| mise 글로벌 툴 | `mise -C "$HOME" upgrade`. 홈에 `mise.toml`이 없으므로 글로벌 config의 항목만 대상이 됩니다 |
-| uv tool | `uv tool upgrade --all` |
-
-`update-all`은 launchd가 넘겨준 환경을 신뢰하지 않고 PATH를 직접 설정합니다. 이때
-`export`가 `brew shellenv`보다 먼저 실행되어야 합니다. `brew shellenv` 안의
-`path_helper`가 환경변수 PATH만 읽으므로, export 되지 않은 PATH로는 `/usr/bin`이
-통째로 사라지기 때문입니다. 한 단계가 실패해도 나머지 단계는 실행되도록 `set -e`는 사용하지
-않습니다.
-
-로그는 `~/Library/Logs/update-all.log`에 기록됩니다. 지금 바로 실행하려면 `update-all`
-또는 `launchctl kickstart -k gui/$(id -u)/local.update-all`을 실행합니다.
-
-cask는 `--greedy`로 목록만 뽑은 뒤에 하나씩 업그레이드합니다. `brew info --json=v2`에
-`pkgutil`, `launchctl`, `kext`가 포함된 cask (zoom 등) 는 업그레이드할 때 sudo가
-필요한데, launchd에는 TTY가 없으므로 `sudo: a terminal is required` 오류로 종료됩니다.
-그래서 그런 cask는 건너뛰고 `skip cask <이름> - sudo 필요` 만 로그에 남깁니다. 해당
-cask는 `brew upgrade --cask <이름>` 으로 직접 업그레이드합니다.
+갑작스런 버전 변경으로 생기는 에러를 피하려고 자동 스케줄 업데이트 스크립트는 두지
+않습니다. formula/cask 업데이트는 필요할 때 `brew upgrade`로 직접 합니다.
 
 ## 비밀 정보
 
