@@ -19,6 +19,8 @@ export PATH="$HOMEBREW_PREFIX/opt/make/libexec/gnubin:$PATH"
 # Completions — FPATH 방식 플러그인은 compinit 보다 앞
 # =============================================================================
 FPATH="$HOMEBREW_PREFIX/share/zsh-completions:$FPATH"
+fpath+=("$HOME/.local/share/zsh/site-functions")
+
 autoload -Uz compinit && compinit
 
 [ -s "$BUN_INSTALL/_bun" ] && source "$BUN_INSTALL/_bun"
