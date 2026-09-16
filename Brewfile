@@ -1,6 +1,5 @@
 # 개발자 Macbook 종합 세팅 글에서 깐 것만.
-# 언어 런타임(mise, uv, bun) 과 PyPI 에만 있는 claude-swap(uv-tools.txt),
-# raycast, 교내 배포처로 받는 오피스류, 유료 폰트(MonoLisa) 는 여기 없다.
+# 언어 런타임(bun), raycast, 교내 배포처로 받는 오피스류, 유료 폰트(MonoLisa) 는 여기 없다.
 #
 #   brew bundle --file ~/.local/share/chezmoi/Brewfile
 
