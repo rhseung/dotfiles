@@ -64,6 +64,15 @@ command -v fnox >/dev/null && eval "$(fnox activate zsh)"
 alias ls='eza'
 alias nano='micro'
 
+# git alias 로는 안 된다 - git 은 이름이 내장 명령과 겹치면 alias.* 를 아예 확인하지 않는다.
+git() {
+  if [ "$1" = "log" ] && [ $# -eq 1 ]; then
+    serie
+  else
+    command git "$@"
+  fi
+}
+
 
 # =============================================================================
 # 1Password — 토큰 CLI 를 Touch ID 로
