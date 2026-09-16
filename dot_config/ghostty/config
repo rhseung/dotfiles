@@ -27,7 +27,7 @@ keybind = super+left=previous_tab
 keybind = super+right=next_tab
 
 # background
-macos-titlebar-style = tabs
+macos-titlebar-style = native
 
 background-opacity = 0.85
 background-blur = true
