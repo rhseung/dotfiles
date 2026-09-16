@@ -10,7 +10,7 @@
 - 1Password 앱을 설치하고, 설정 > 개발자 > "1Password CLI와 통합" 을 켭니다.
 - App Store에 로그인합니다. 로그인하지 않으면 Brewfile의 `mas` 줄이 아무 메시지 없이 실패합니다. macOS 10.13부터 `mas
 signin`이 막혔기 때문에 App Store 앱에서 직접 로그인해야 합니다.
-- 언어 런타임으로 [Bun](https://bun.com/)을 사용합니다.
+- 언어 런타임으로 [mise](https://mise.jdx.dev/), [Bun](https://bun.com/)을 사용합니다.
 
 ## 설치
 
@@ -30,7 +30,7 @@ Brewfile은 chezmoi가 관리하지 않으므로 `brew bundle`은 따로 실행�
 | 소스 | 대상 | 비고 |
 | --- | --- | --- |
 | `dot_zshrc` | `~/.zshrc` | PATH, completions, plugin, tool init, prompt 순서로 고정. 툴이 없으면 건너뜁니다 |
-| `dot_zprofile` | `~/.zprofile` | OrbStack, JetBrains Toolbox 등 GUI 앱용 PATH |
+| `dot_zprofile` | `~/.zprofile` | mise `--shims` (GUI 및 비인터랙티브 셸용), OrbStack/JetBrains Toolbox PATH |
 | `private_dot_gitconfig` | `~/.gitconfig` | delta pager, zdiff3, SSH 커밋 서명 (1Password) |
 | `dot_config/git/ignore` | `~/.config/git/ignore` | 전역 gitignore |
 | `dot_config/ghostty/config` | `~/.config/ghostty/config` | font, theme, keybind |

@@ -1,3 +1,6 @@
+# mise — shims 방식. GUI 앱·비인터랙티브 셸도 잡게 (인터랙티브는 .zshrc 의 activate)
+command -v mise >/dev/null && eval "$(mise activate zsh --shims)"
+
 # Added by OrbStack: command-line tools and integration
 # This won't be added again if you remove it.
 source ~/.orbstack/shell/init.zsh 2>/dev/null || :

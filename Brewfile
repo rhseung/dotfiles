@@ -38,6 +38,7 @@ brew "serie"
 brew "git-delta"
 
 # --- 언어 환경 ---
+brew "mise"
 brew "ruff"
 brew "pyrefly"
 
